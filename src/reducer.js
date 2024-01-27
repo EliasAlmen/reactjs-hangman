@@ -7,7 +7,7 @@ const reducer = (state, action) => {
             newState.guessedLetters = new Array(payload.word.length).fill(null);
             newState.hints = Math.ceil(payload.word.length * 0.2);
             newState.mistakeCount = 0;
-            newState.gamesState = null;
+            newState.gameState = null;
             return newState;
         case "MISTAKE":
             newState.mistakeCount += 1;
@@ -15,6 +15,9 @@ const reducer = (state, action) => {
                 newState.losses += 1;
                 newState.gameState = "lost";
             }
+            return newState;
+        case "UPDATE_LETTERS":
+            newState.guessedLetters = payload.letters;
             return newState;
         default:
             return state;

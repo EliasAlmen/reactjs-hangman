@@ -40,7 +40,17 @@ function App() {
 
     const checkGuess = (letter) => {
         if (state.word.includes(letter)) {
-            //correct
+            const positions = [...state.word.matchAll(letter)];
+            const letters = [...state.guessedLetters];
+            positions.forEach((position) => {
+                letters[position.index] = letter;
+            });
+            dispatch({
+                type: "UPDATE_LETTERS",
+                payload: {
+                    letters,
+                },
+            });
         } else {
             dispatch({
                 type: "MISTAKE",
@@ -48,6 +58,7 @@ function App() {
         }
     };
 
+    console.log(state.word);
     return (
         <div className="flex flex-col h-screen">
             <Header />

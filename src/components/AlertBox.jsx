@@ -11,7 +11,7 @@ const AlertBox = ({ gamesState, wins, losses, onRestart }) => {
         <div
             className={
                 "alert-box " +
-                (gamesState === "won" ? "alert-success" : "alert-error")
+                (gamesState === 'won' ? 'alert-success' : "alert-error")
             }
         >
             <h6>{gameStates[gamesState]}</h6>
