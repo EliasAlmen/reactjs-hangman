@@ -21,7 +21,7 @@ function App() {
         losses: 0,
         word: null,
         guessedLetters: [],
-        topic: "animals",
+        topic: "djur",
         hints: 0,
         mistakeCount: 0,
         gameState: null,
@@ -38,7 +38,7 @@ function App() {
         startGame();
     }, []);
 
-    const checkGuess = (letter) => {
+    const checkGuess = (letter, hintUsed) => {
         if (state.word.includes(letter)) {
             const positions = [...state.word.matchAll(letter)];
             const letters = [...state.guessedLetters];
@@ -49,6 +49,7 @@ function App() {
                 type: "UPDATE_LETTERS",
                 payload: {
                     letters,
+                    hintUsed,
                 },
             });
         } else {
@@ -56,6 +57,24 @@ function App() {
                 type: "MISTAKE",
             });
         }
+    };
+
+    const giveUp = () => {
+        dispatch({
+            type: "GIVE_UP",
+        });
+    };
+
+    const useHint = () => {
+        const allLetters = [...new Set(state.word)];
+        const revealedLetters = state.guessedLetters.filter((x) => x);
+        const hintLetters = allLetters.filter(
+            (letter) => !revealedLetters.includes(letter)
+        );
+        const hintLetter =
+            hintLetters[Math.floor(Math.random() * hintLetters.length)];
+
+        checkGuess(hintLetter, true);
     };
 
     console.log(state.word);
@@ -70,10 +89,17 @@ function App() {
                         <>
                             <Keyboard onClick={checkGuess} />
                             <div className="btn-group">
-                                <button className="btn btn-error">
+                                <button
+                                    onClick={giveUp}
+                                    className="btn btn-error"
+                                >
                                     Ge upp!
                                 </button>
-                                <button className="btn">
+                                <button
+                                    disabled={state.hints === 0}
+                                    onClick={useHint}
+                                    className="btn disabled:opacity-30"
+                                >
                                     Ledtråd
                                     <span className="btn-label">
                                         {state.hints}

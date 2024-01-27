@@ -1,6 +1,6 @@
 import React from "react";
 
-const AlertBox = ({ gamesState, wins, losses, onRestart }) => {
+const AlertBox = ({ gameState, wins, losses, onRestart }) => {
     const gameStates = {
         won: "Du vann!",
         lost: "Du förlorade!",
@@ -11,10 +11,10 @@ const AlertBox = ({ gamesState, wins, losses, onRestart }) => {
         <div
             className={
                 "alert-box " +
-                (gamesState === 'won' ? 'alert-success' : "alert-error")
+                (gameState === "won" ? "alert-success" : "alert-error")
             }
         >
-            <h6>{gameStates[gamesState]}</h6>
+            <h6>{gameStates[gameState]}</h6>
             <p>
                 Du har spelat {wins + losses} ggr.
                 <br />
